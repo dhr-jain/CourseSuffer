@@ -271,7 +271,7 @@
     </nav>
 
     <script>
-        // --- ADVANCED MOCK DATA & STATE MANAGEMENT ---
+        // --- Dhrix MOCK DATA & STATE MANAGEMENT ---
         const mockData = {
             courses: {
                 'MM308': { name: 'Thin Films & Nanostructures', title: 'MM308: Thin Films & Nanostructures', threads: [1, 2, 3] },
@@ -281,7 +281,7 @@
                 'PH202': { name: 'Quantum Physics', title: 'PH202: Quantum Physics', threads: [] }
             },
             threads: {
-                1: { title: 'How do you revise Prof. R’s lectures?', replies: 23, id: 1, course: 'MM308', user: 'User_X', time: '12h ago' },
+                1: { title: 'How do you revise Prof. RDev’s lectures?', replies: 23, id: 1, course: 'MM308', user: 'User_X', time: '12h ago' },
                 2: { title: 'Best way to handle multiple assignments', replies: 15, id: 2, course: 'MM308', user: 'Anonymous', time: '1d ago' },
                 3: { title: 'Seeking notes for week lecture', replies: 8, id: 3, course: 'MM308', user: 'User_Y', time: '3d ago' },
                 4: { title: 'Is MA103 a good elective for B.Tech?', replies: 12, id: 4, course: 'MA103', user: 'Anonymous', time: '4h ago' },
@@ -315,8 +315,8 @@
             isAnonDefault: localStorage.getItem('isAnonDefault') === 'true',
             isNotifications: localStorage.getItem('isNotifications') === 'true',
             user: JSON.parse(localStorage.getItem('user')) || {
-                name: 'Arham',
-                email: 'example@mail.com',
+                name: 'Student Name',
+                email: 'RollNumber@iiti.ac.in',
                 program: 'B.Tech, IIT Indore',
                 profilePic: 'https://via.placeholder.com/120?text=A'
             },
@@ -847,4 +847,5 @@
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
+
 </html>
