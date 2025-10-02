@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>CourseSuffer - Connect. Cope. Conquer.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom animations and styles */
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-slideIn {
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* Enhanced Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Dark Mode Glassmorphism */
+        body.dark .glass-card {
+            background: rgba(55, 65, 81, 0.9);
+            border: 1px solid rgba(74, 85, 104, 0.6);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Base Dark Mode */
+        body.dark {
+            background-color: #1f2937;
+            color: #f3f4f6;
+        }
+
+        body.dark header {
+            background: linear-gradient(135deg, #10b981, #047857);
+        }
+
+        /* High-contrast text colors */
+        body.dark .text-gray-900 { color: #f3f4f6; } /* Pure white for max contrast */
+        body.dark .text-gray-700 { color: #d1d5db; }
+        body.dark .text-gray-600 { color: #d1d5db; }
+        body.dark .text-gray-500 { color: #9ca3af; }
+        body.dark .bg-green-50 { background-color: #065f46; }
+        body.dark .bg-green-100 { background-color: #047857; }
+        body.dark .bg-gray-100 { background-color: #374151; }
+        body.dark .bottom-nav { background-color: #1f2937; border-top: 1px solid #374151; }
+
+        /* Enhanced Nav Button Styling */
+        .nav-btn {
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding: 0.75rem;
+        }
+
+        .nav-btn.active-nav-btn {
+            transform: translateY(-2px);
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 0.75rem;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            color: #10b981;
+        }
+
+        /* Custom Scrollbar */
+        .scrollbar-thin {
+            scrollbar-width: thin;
+            scrollbar-color: #10b981 #e5e7eb;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: #e5e7eb;
+            border-radius: 3px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 3px;
+        }
+
+        body.dark .scrollbar-thin::-webkit-scrollbar-track {
+            background: #374151;
+        }
+
+        body.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #34d399;
+        }
+
+        /* Input Focus Effects */
+        input:focus {
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+            outline: none;
+        }
+
+        /* Typography Enhancements */
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.025em;
+        }
+
+        /* Button Micro-Interactions */
+        .btn-gradient {
+            background: linear-gradient(135deg, #10b981, #047857);
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #34d399, #059669);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-gradient:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mobile-Specific Styles */
+        @media (max-width: 640px) {
+            body {
+                font-size: 16px; /* Base font size for mobile */
+            }
+
+            header {
+                padding: 0 1rem;
+                height: 4.5rem;
+            }
+
+            main {
+                padding: 5rem 1rem 5rem 1rem;
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .glass-card {
+                padding: 1rem;
+                border-radius: 0.75rem;
+            }
+
+            .nav-btn {
+                padding: 0.5rem;
+            }
+
+            .nav-btn span {
+                font-size: 0.75rem;
+            }
+
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            h2 {
+                font-size: 0.875rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            h4 {
+                font-size: 1.25rem;
+            }
+
+            p, li, span {
+                font-size: 1rem; /* Ensure readable text */
+            }
+
+            input, button {
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+
+            .btn-gradient {
+                padding: 0.75rem;
+            }
+
+            .bottom-nav {
+                height: 4.5rem;
+            }
+        }
+
+        /* Additional Styles for Editable Profile */
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #10b981;
+        }
+
+        .edit-input {
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        body.dark .edit-input {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #f3f4f6;
+        }
+
+        .edit-input:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col transition-colors duration-300 font-inter">
+    <header class="fixed top-0 left-0 w-full text-white shadow-lg z-20 flex items-center justify-between px-6 h-16 bg-gradient-to-r from-green-500 to-green-600 transition-colors duration-300">
+        <div class="flex items-center space-x-3">
+            <img src="https://img.freepik.com/premium-vector/sad-cartoon-book-education-icon-vector-illustration_444196-760.jpg?w=360" alt="Logo" class="w-9 h-9 transform hover:scale-110 transition-transform duration-300">
+            <div>
+                <h1 class="text-xl font-extrabold tracking-tight">CourseSuffer</h1>
+                <h2 class="text-sm font-medium opacity-90">Connect. Cope. Conquer.</h2>
+            </div>
+        </div>
+        <h2 id="page-title" class="text-lg font-semibold transition-opacity duration-300">Home</h2>
+    </header>
+
+    <main id="app-content" class="flex-1 pt-20 pb-20 px-4 overflow-y-auto w-full max-w-3xl mx-auto scrollbar-thin">
+    </main>
+
+    <nav class="bottom-nav fixed bottom-0 left-0 w-full bg-white shadow-xl flex justify-around items-center h-16 border-t border-gray-200 z-20 transition-colors duration-300">
+        <button class="nav-btn flex flex-col items-center text-gray-600 hover:text-green-500 py-2 active-nav-btn" data-page="home" onclick="navigate('home', this)">
+            <i class="fas fa-home text-xl"></i>
+            <span class="text-xs font-medium mt-1">Home</span>
+        </button>
+        <button class="nav-btn flex flex-col items-center text-gray-600 hover:text-green-500 py-2" data-page="course-details" onclick="navigate('course-details', this, 'Threads')">
+            <i class="fas fa-comment-alt text-xl"></i>
+            <span class="text-xs font-medium mt-1">Threads</span>
+        </button>
+        <button class="nav-btn flex flex-col items-center text-gray-600 hover:text-green-500 py-2" data-page="wellness" onclick="navigate('wellness', this)">
+            <i class="fas fa-handshake text-xl"></i>
+            <span class="text-xs font-medium mt-1">Mentor</span>
+        </button>
+        <button class="nav-btn flex flex-col items-center text-gray-600 hover:text-green-500 py-2" data-page="profile" onclick="navigate('profile', this)">
+            <i class="fas fa-user text-xl"></i>
+            <span class="text-xs font-medium mt-1">Profile</span>
+        </button>
+    </nav>
+
+    <script>
+        // --- ADVANCED MOCK DATA & STATE MANAGEMENT ---
+        const mockData = {
+            courses: {
+                'MM308': { name: 'Thin Films & Nanostructures', title: 'MM308: Thin Films & Nanostructures', threads: [1, 2, 3] },
+                'MA103': { name: 'International Economics', title: 'MA103: International Economics', threads: [4, 5] },
+                'CE621': { name: 'Water Quality', title: 'CE621: Water Quality', threads: [6] },
+                'CS101': { name: 'Introduction to Computer Science', title: 'CS101: Intro to CS', threads: [] },
+                'PH202': { name: 'Quantum Physics', title: 'PH202: Quantum Physics', threads: [] }
+            },
+            threads: {
+                1: { title: 'How do you revise Prof. R’s lectures?', replies: 23, id: 1, course: 'MM308', user: 'User_X', time: '12h ago' },
+                2: { title: 'Best way to handle multiple assignments', replies: 15, id: 2, course: 'MM308', user: 'Anonymous', time: '1d ago' },
+                3: { title: 'Seeking notes for week lecture', replies: 8, id: 3, course: 'MM308', user: 'User_Y', time: '3d ago' },
+                4: { title: 'Is MA103 a good elective for B.Tech?', replies: 12, id: 4, course: 'MA103', user: 'Anonymous', time: '4h ago' },
+                5: { title: 'Tips on mid-sem grading pattern?', replies: 5, id: 5, course: 'MA103', user: 'User_Z', time: '2d ago' },
+                6: { title: 'Prerequisites for CE621', replies: 3, id: 6, course: 'CE621', user: 'User_A', time: '1h ago' },
+            },
+            replies: {
+                1: [
+                    { user: 'Anonymous', text: 'I condense all notes into flashcards on Anki. Spend 30 mins day just review. Active recall FTW! 🔥', time: '2h ago' },
+                    { user: 'User_Thinker88', text: 'Solve all the Previous Year Questions (PYQs): the best way; interpret the top pattern. what topics important. 📊', time: '1d ago' }
+                ]
+            },
+            wellnessTips: [
+                'Time Management: Break short breaks, use Pomodoro ⏰',
+                'Stress Less: Try the 3-minute mindfulness rule before studying 😌',
+                'Study Habits: Prioritize **Active Recall** over passive reading 📖',
+                'Peer Connect: Find a focused study buddy or mentor 👥',
+                'Exercise: Take a 10-min walk to clear your mind 🏃',
+                'Sleep: Aim for 7-8 hours to boost retention 💤'
+            ],
+            chatHistory: [
+                { user: 'Grok AI Buddy', text: 'Hello! I\'m Grok, built by xAI. I can summarize threads, provide study tips, or answer questions. How can I help with your courses today? 🌟' }
+            ]
+        };
+
+        const appState = {
+            currentPage: 'login',
+            currentCourseKey: null,
+            currentThreadId: null,
+            isDarkMode: localStorage.getItem('darkMode') === 'true',
+            isAnonDefault: localStorage.getItem('isAnonDefault') === 'true',
+            isNotifications: localStorage.getItem('isNotifications') === 'true',
+            user: JSON.parse(localStorage.getItem('user')) || {
+                name: 'Arham',
+                email: 'example@mail.com',
+                program: 'B.Tech, IIT Indore',
+                profilePic: 'https://via.placeholder.com/120?text=A'
+            },
+            isLoggedIn: localStorage.getItem('isLoggedIn') === 'true'
+        };
+
+        const appContent = document.getElementById('app-content');
+        const pageTitleElement = document.getElementById('page-title');
+        const defaultUser = appState.user.name + ' (You)';
+
+        // --- CORE LOGIC FUNCTIONS ---
+
+        function initApp() {
+            initDarkMode();
+            if (!appState.isLoggedIn) {
+                navigate('login', null, 'Login');
+            } else {
+                navigate('home', document.querySelector('.bottom-nav button[data-page="home"]'));
+            }
+        }
+
+        function initDarkMode() {
+            if (appState.isDarkMode) {
+                document.body.classList.add('dark');
+            }
+        }
+
+        function toggleDarkMode() {
+            appState.isDarkMode = !appState.isDarkMode;
+            document.body.classList.toggle('dark', appState.isDarkMode);
+            localStorage.setItem('darkMode', appState.isDarkMode);
+        }
+
+        function navigate(pageId, btn, title, contextKey = null) {
+            if (pageId !== 'login' && !appState.isLoggedIn) {
+                pageId = 'login';
+                title = 'Login';
+            }
+
+            appState.currentPage = pageId;
+            appState.currentCourseKey = (pageId === 'course-details' && contextKey) ? contextKey : appState.currentCourseKey;
+            appState.currentThreadId = (pageId === 'thread-details' && contextKey) ? contextKey : null;
+
+            appContent.innerHTML = '';
+            appContent.classList.remove('animate-slideIn');
+            void appContent.offsetWidth;
+            appContent.classList.add('animate-slideIn');
+            pageTitleElement.innerText = title || pageId.charAt(0).toUpperCase() + pageId.slice(1);
+
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-nav-btn', 'text-green-500'));
+            if (btn) btn.classList.add('active-nav-btn', 'text-green-500');
+
+            renderPage();
+        }
+
+        function renderPage() {
+            switch (appState.currentPage) {
+                case 'login':
+                    renderLoginPage();
+                    break;
+                case 'home':
+                    renderHomePage();
+                    break;
+                case 'course-details':
+                    let key = appState.currentCourseKey || Object.keys(mockData.courses)[0];
+                    if (!key) {
+                        appContent.innerHTML = `<div class="p-4 glass-card rounded-xl text-center text-gray-500 dark:text-gray-300">No courses defined.</div>`;
+                        pageTitleElement.innerText = "Threads";
+                        return;
+                    }
+                    appState.currentCourseKey = key;
+                    renderCourseDetailsPage(key);
+                    break;
+                case 'thread-details':
+                    renderThreadDetailsPage(appState.currentThreadId);
+                    break;
+                case 'wellness':
+                    renderWellnessPage();
+                    break;
+                case 'profile':
+                    renderProfilePage();
+                    break;
+                case 'ai-buddy':
+                    renderAIBuddyPage();
+                    break;
+                default:
+                    renderHomePage();
+            }
+        }
+
+        function renderLoginPage() {
+            const html = `
+                <div class="space-y-6 p-4 glass-card rounded-xl">
+                    <h3 class="text-xl font-extrabold text-gray-900 dark:text-gray-200 mb-4">Login to CourseSuffer</h3>
+                    <input type="text" id="username" class="edit-input mb-3" placeholder="Username" value="arham">
+                    <input type="password" id="password" class="edit-input mb-3" placeholder="Password" value="password">
+                    <button onclick="login()" class="w-full btn-gradient text-white py-2 rounded-xl shadow-lg font-bold">Login</button>
+                    <p class="text-center text-sm text-gray-600 dark:text-gray-300 mt-2">Demo: username 'arham', password 'password'</p>
+                </div>
+            `;
+            appContent.innerHTML = html;
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === 'arham' && password === 'password') {
+                appState.isLoggedIn = true;
+                localStorage.setItem('isLoggedIn', true);
+                navigate('home', document.querySelector('.bottom-nav button[data-page="home"]'));
+            } else {
+                alert('Invalid credentials. Use demo login.');
+            }
+        }
+
+        function previewCourses() {
+            alert('Previewing non-enrolled courses like CS101, EE202, and more... You can now explore discussions without enrolling!');
+        }
+
+        function connectMentor() {
+            alert('Connecting you to a peer mentor anonymously... Match found! Start chatting in a secure session.');
+        }
+
+        function logOut() {
+            appState.isLoggedIn = false;
+            localStorage.removeItem('isLoggedIn');
+            navigate('login', null, 'Login');
+        }
+
+        function renderHomePage() {
+            const coursesHtml = Object.entries(mockData.courses).map(([key, course]) => `
+                <li class="flex justify-between items-center bg-green-50 dark:bg-green-700/50 rounded-xl p-4 cursor-pointer glass-card hover:shadow-lg hover:ring-2 ring-green-500 transition-all duration-300" 
+                    onclick="navigate('course-details', document.querySelector('.bottom-nav button[data-page=\\'course-details\\']'), '${course.title.replace("'", "\\'")}', '${key}')">
+                    <span class="bg-green-600 text-white rounded-full px-3 py-1 mr-3 text-sm font-bold flex-shrink-0">${key}</span>
+                    <span class="flex-1 text-gray-900 dark:text-gray-200 font-medium">${course.name}</span>
+                    <i class="fas fa-arrow-right text-green-500 font-bold text-lg"></i>
+                </li>
+            `).join('');
+
+            const html = `
+                <div class="space-y-6">
+                    <div class="p-4 glass-card rounded-xl">
+                        <h3 class="text-xl font-extrabold text-gray-900 dark:text-gray-200 mb-4">Your Courses 📚</h3>
+                        <ul class="space-y-3">
+                            ${coursesHtml}
+                        </ul>
+                        <button class="w-full mt-4 btn-gradient text-white py-2 rounded-xl shadow-lg font-bold tracking-wide" onclick="previewCourses()">Preview Other Courses 🔍</button>
+                    </div>
+
+                    <div class="p-4 glass-card rounded-xl">
+                        <h3 class="text-xl font-extrabold text-gray-900 dark:text-gray-200 mb-4">Peer Support Hub ⚡</h3>
+                        <div class="space-y-3">
+                            <button class="w-full btn-gradient text-white py-2 rounded-xl shadow-lg font-bold flex items-center justify-center" onclick="navigate('wellness', document.querySelector('.bottom-nav button[data-page=\\'wellness\\']'), 'Mentor Connect')">
+                                <i class="fas fa-users text-lg mr-2"></i> Connect with a Peer Mentor (1-on-1)
+                            </button>
+                            <button class="w-full btn-gradient text-white py-2 rounded-xl shadow-lg font-bold flex items-center justify-center" onclick="navigate('ai-buddy', null, 'Grok AI Buddy')">
+                                <i class="fas fa-robot text-lg mr-2"></i> Grok AI Buddy: Instant Summaries & Tips
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-4 glass-card rounded-xl">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-3">Wellness Corner Snippet 🧘‍♂️</h3>
+                        <ul class="space-y-2 text-gray-700 dark:text-gray-200">
+                            ${mockData.wellnessTips.slice(0, 3).map(tip => `<li class="flex items-start"><i class="fas fa-check-circle mr-2 text-green-500 font-extrabold text-lg"></i> ${tip}</li>`).join('')}
+                        </ul>
+                        <button class="text-green-600 dark:text-green-400 font-bold mt-3 text-sm hover:underline" onclick="navigate('wellness', document.querySelector('.bottom-nav button[data-page=\\'wellness\\']'), 'Mentor Connect')">View All Wellness Tips & Mentors &rarr;</button>
+                    </div>
+                </div>
+            `;
+            appContent.innerHTML = html;
+        }
+
+        function renderCourseDetailsPage(courseKey) {
+            const course = mockData.courses[courseKey];
+            pageTitleElement.innerText = course.title;
+
+            const threadsHtml = course.threads.map(threadId => {
+                const thread = mockData.threads[threadId];
+                return `
+                    <li class="bg-green-50 dark:bg-green-700/50 rounded-xl p-4 cursor-pointer glass-card hover:ring-2 ring-green-500 transition-all duration-300" onclick="navigate('thread-details', null, 'Thread: ${thread.title.substring(0, 20)}...', ${thread.id})">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="flex-1 text-gray-900 dark:text-gray-200 font-semibold truncate">${thread.title}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+                            <span>Started by ${thread.user} · ${thread.time}</span>
+                            <span class="text-green-600 dark:text-green-400 font-bold">${thread.replies} replies &rarr;</span>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+
+            const html = `
+                <div class="p-4 glass-card rounded-xl">
+                    <h3 class="text-xl font-extrabold text-gray-900 dark:text-gray-200 mb-4 border-b pb-2">${course.title} Discussion Threads 🧵</h3>
+                    <input type="text" id="thread-search" class="edit-input mb-4" placeholder="Search threads...">
+                    <ul class="space-y-3" id="thread-list">
+                        ${threadsHtml || '<li class="text-gray-600 dark:text-gray-300 p-4">No threads yet. Be the first to ask!</li>'}
+                    </ul>
+                    
+                    <div class="mt-6 pt-3 border-t border-gray-200 dark:border-gray-700">
+                        <h4 class="font-bold text-lg mb-2">Start a New Thread</h4>
+                        <input type="text" id="new-thread-input" class="edit-input mb-3" placeholder="Ask your course doubt or share a hack... 💡">
+                        <label class="flex items-center text-sm text-gray-600 dark:text-gray-300 mb-3">
+                            <input type="checkbox" id="post-anon" class="mr-2 h-4 w-4 text-green-600 rounded focus:ring-green-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700" ${appState.isAnonDefault ? 'checked' : ''}> Post anonymously 🕶️
+                        </label>
+                        <button onclick="postNewThread('${courseKey}')" class="w-full btn-gradient text-white py-2 rounded-xl shadow-lg font-bold">Post Thread 🚀</button>
+                    </div>
+                </div>
+            `;
+            appContent.innerHTML = html;
+
+            // Add search functionality
+            const searchInput = document.getElementById('thread-search');
+            searchInput.addEventListener('input', () => filterThreads(searchInput.value, courseKey));
+        }
+
+        function filterThreads(query, courseKey) {
+            const course = mockData.courses[courseKey];
+            const filteredThreads = course.threads.filter(threadId => {
+                const thread = mockData.threads[threadId];
+                return thread.title.toLowerCase().includes(query.toLowerCase());
+            });
+
+            const threadsHtml = filteredThreads.map(threadId => {
+                const thread = mockData.threads[threadId];
+                return `
+                    <li class="bg-green-50 dark:bg-green-700/50 rounded-xl p-4 cursor-pointer glass-card hover:ring-2 ring-green-500 transition-all duration-300" onclick="navigate('thread-details', null, 'Thread: ${thread.title.substring(0, 20)}...', ${thread.id})">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="flex-1 text-gray-900 dark:text-gray-200 font-semibold truncate">${thread.title}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-300">
+                            <span>Started by ${thread.user} · ${thread.time}</span>
+                            <span class="text-green-600 dark:text-green-400 font-bold">${thread.replies} replies &rarr;</span>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+
+            document.getElementById('thread-list').innerHTML = threadsHtml || '<li class="text-gray-600 dark:text-gray-300 p-4">No matching threads.</li>';
+        }
+
+        function renderThreadDetailsPage(threadId) {
+            if (!threadId || !mockData.threads[threadId]) {
+                appContent.innerHTML = `<div class="p-4 glass-card rounded-xl text-center text-red-500 dark:text-red-400">Thread Not Found.</div>`;
+                return;
+            }
+            const thread = mockData.threads[threadId];
+            const replies = mockData.replies[threadId] || [];
+
+            const repliesHtml = replies.map(reply => `
+                <li class="pb-4 flex items-start space-x-3 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 -mx-2 rounded transition-colors">
+                    <img src="https://via.placeholder.com/32?text=${reply.user.charAt(0)}" alt="${reply.user}" class="w-8 h-8 rounded-full flex-shrink-0 border-2 border-green-400">
+                    <div class="flex-1">
+                        <p class="text-gray-900 dark:text-gray-200 font-medium">${reply.text}</p>
+                        <span class="text-sm text-gray-600 dark:text-gray-300 font-medium">${reply.user} · ${reply.time}</span>
+                    </div>
+                </li>
+            `).join('');
+
+            const html = `
+                <div class="p-4 glass-card rounded-xl">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">${thread.title}</h3>
+                    <p class="text-sm text-green-600 dark:text-green-400 font-semibold mb-4">${mockData.courses[thread.course].title}</p>
+                    
+                    <h4 class="font-bold text-lg text-gray-900 dark:text-gray-200 mb-3">${replies.length} Peer Insights 💬</h4>
+                    <ul class="space-y-3" id="reply-list">
+                        ${repliesHtml.length ? repliesHtml : '<li class="text-gray-600 dark:text-gray-300">Be the first to share your insights!</li>'}
+                    </ul>
+
+                    <p class="mt-4 text-purple-600 dark:text-purple-400 font-bold border-t pt-3 border-gray-200 dark:border-gray-700 cursor-pointer" onclick="summarizeThread(${threadId})">
+                        Ask Grok AI Buddy to summarize this discussion! 🤖✨ (Powered by xAI)
+                    </p>
+
+                    <div class="mt-4">
+                        <h4 class="font-bold text-lg mb-2">Add Your Insight</h4>
+                        <input type="text" id="new-reply-input" class="edit-input mb-3" placeholder="Share your experience or solution... 💭">
+                        <label class="flex items-center text-sm text-gray-600 dark:text-gray-300 mb-3">
+                            <input type="checkbox" id="reply-anon" class="mr-2 h-4 w-4 text-green-600 rounded focus:ring-green-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700" ${appState.isAnonDefault ? 'checked' : ''}> Reply anonymously 🕶️
+                        </label>
+                        <button onclick="postReply(${threadId})" class="w-full btn-gradient text-white py-2 rounded-xl shadow-lg font-bold">Post Reply 📩</button>
+                    </div>
+                </div>
+            `;
+            appContent.innerHTML = html;
+        }
+
+        function summarizeThread(threadId) {
+            navigate('ai-buddy', null, 'Grok AI Buddy');
+            const summaryQuery = `Summarize thread: ${mockData.threads[threadId].title} from CourseSuffer`;
+            setTimeout(() => sendToAIBuddy(summaryQuery), 500);
+        }
+
+        function renderWellnessPage() {
+            const tipsHtml = mockData.wellnessTips.map(tip => `
+                <li class="flex items-start bg-green-50 dark:bg-green-700/30 p-3 rounded-xl shadow-sm">
+                    <i class="fas fa-check-circle mr-2 text-green-600 dark:text-green-400 font-bold text-lg flex-shrink-0"></i> 
+                    <p class="text-gray-900 dark:text-gray-200 font-medium">${tip}</p>
+                </li>
+            `).join('');
+
+            const html = `
+                <div class="p-4 glass-card rounded-xl space-y-4">
+                    <h3 class="text-xl font-extrabold text-gray-900 dark:text-gray-200 mb-3">Wellness & Mentorship Center 🌟</h3>
+                    
+                    <div class="p-4 bg-blue-100 dark:bg-blue-900/50 rounded-xl border-l-4 border-blue-500">
+                        <h4 class="font-bold text-lg text-gray-900 dark:text-gray-200 mb-2">1-on-1 Peer Mentor Connect</h4>
+                        <button class="w-full btn-gradient text-white py-2 rounded-xl shadow-lg font-bold flex items-center justify-center" onclick="connectMentor()">
+                            <i class="fas fa-handshake text-lg mr-2"></i> Find Your Confidential Mentor
+                        </button>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mt-2 text-center">All interactions are **secure and confidential** (optional anonymity). You are not alone! 🔒</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-900 dark:text-gray-200 mb-3 border-b pb-2">Top Wellness Tips 🧘</h4>
+                        <ul class="space-y-2">
+                            ${tipsHtml}
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-lg text-gray-900 dark:text-gray-200 mb-3 border-b pb-2">Campus Diaries 📖 (Stories & Insights)</h4>
+                        <ul class="space-y-2">
+                            <li class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3 shadow-md hover:ring-1 ring-green-500 transition-all">
+                                <p class="text-gray-900 dark:text-gray-200 font-medium">New to campus? Here's how I found my community and overcame initial anxiety. 👯‍♂️</p>
+                                <span class="text-sm text-gray-600 dark:text-gray-300 mt-1 block">Anonymous · 3d ago</span>
+                            </li>
+                            <li class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3 shadow-md hover:ring-1 ring-green-500 transition-all">
+                                <p class="text-gray-900 dark:text-gray-200 font-medium">Balancing academics and fun: My weekly schedule hack for engineering students. 🎉</p>
+                                <span class="text-sm text-gray-600 dark:text-gray-300 mt-1 block">User_CampusFan · 1w ago</span>
+                            </li>
+                            <li class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3 shadow-md hover:ring-1 ring-green-500 transition-all">
+                                <p class="text-gray-900 dark:text-gray-200 font-medium">Dealing with exam stress: My go-to techniques that worked wonders. 😌</p>
+                                <span class="text-sm text-gray-600 dark:text-gray-300 mt-1 block">StressBuster · 2d ago</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            appContent.innerHTML = html;
+        }
+
+        function renderAIBuddyPage() {
+            const chatHtml = mockData.chatHistory.map(msg => {
+                const isAI = msg.user === 'Grok AI Buddy';
+                const bgColor = isAI ? 'bg-green-100 dark:bg-green-600/50' : 'bg-gray-100 dark:bg-gray-700/50';
+                const alignment = isAI ? 'justify-start' : 'justify-end';
+                const textColor = isAI ? 'text-gray-900 dark:text-gray-200' : 'text-gray-900 dark:text-gray-200';
+                
+                return `
+                    <div class="flex ${alignment}">
+                        <div class="${bgColor} rounded-xl p-3 max-w-[80%] transition-all duration-300 shadow-md">
+                            <p class="font-bold text-sm ${isAI ? 'text-green-800 dark:text-green-300' : 'text-gray-600 dark:text-gray-300'}">${msg.user}</p>
+                            <p class="${textColor} mt-1">${msg.text.replace(/\n/g, '<br>')}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const html = `
+                <div class="p-4 glass-card rounded-xl h-[70vh] flex flex-col">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-3 border-b pb-2">Grok AI Buddy 🤖 (Powered by xAI)</h3>
+                    
+                    <div id="chat-messages" class="flex-1 overflow-y-auto space-y-3 mb-3 pr-2 scrollbar-thin">
+                        ${chatHtml}
+                    </div>
+                    
+                    <div class="flex flex-shrink-0">
+                        <input type="text" id="ai-input" class="flex-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200 rounded-l-xl p-3 focus:ring-4 focus:ring-purple-500/50 outline-none transition-all" placeholder="Ask about courses, summaries, or wellness... 💡">
+                        <button onclick="sendToAIBuddy()" class="btn-gradient text-white py-3 px-5 rounded-r-xl shadow-lg font-bold flex-shrink-0">Send 📤</button>
+                    </div>
+                </div>
+            `;
+            appContent.innerHTML = html;
+            
+            const messages = document.getElementById('chat-messages');
+            if (messages) messages.scrollTop = messages.scrollHeight;
+        }
+
+        function renderProfilePage() {
+            const { name, email, program, profilePic } = appState.user;
+            const html = `
+                <div class="p-4 glass-card rounded-xl">
+                    <h3 class="text-xl font-extrabold text-gray-900 dark:text-gray-200 mb-4 border-b pb-2">Your Profile 👤</h3>
+                    
+                    <div class="flex flex-col items-center mb-6">
+                        <img src="${profilePic}" alt="Profile Picture" class="profile-pic mb-4">
+                        <label class="btn-gradient text-white py-2 px-4 rounded-xl shadow-lg font-bold cursor-pointer">
+                            Upload New Picture
+                            <input type="file" accept="image/*" onchange="updateProfilePic(event)" class="hidden">
+                        </label>
+                    </div>
+                    
+                    <h4 class="font-bold text-lg text-gray-900 dark:text-gray-200 mb-2">Edit Details</h4>
+                    <input type="text" id="edit-name" class="edit-input mb-3" value="${name}" placeholder="Name">
+                    <input type="email" id="edit-email" class="edit-input mb-3" value="${email}" placeholder="Email">
+                    <input type="text" id="edit-program" class="edit-input mb-3" value="${program}" placeholder="Program">
+                    
+                    <button onclick="saveProfile()" class="w-full btn-gradient text-white py-2 rounded-xl shadow-lg font-bold mt-4">Save Changes 💾</button>
+                    
+                    <h4 class="font-bold text-lg text-gray-900 dark:text-gray-200 mt-6 mb-2 border-t pt-3">Preferences</h4>
+                    <div class="space-y-3">
+                        <label class="flex items-center text-gray-900 dark:text-gray-200 font-medium cursor-pointer">
+                            <input type="checkbox" class="mr-2 h-5 w-5 text-green-600 rounded focus:ring-green-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700" id="anon-toggle" onchange="appState.isAnonDefault = this.checked; localStorage.setItem('isAnonDefault', this.checked)" ${appState.isAnonDefault ? 'checked' : ''}> Default to Anonymous Posting 🕶️
+                        </label>
+                        <label class="flex items-center text-gray-900 dark:text-gray-200 font-medium cursor-pointer">
+                            <input type="checkbox" class="mr-2 h-5 w-5 text-green-600 rounded focus:ring-green-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700" id="notif-toggle" onchange="appState.isNotifications = this.checked; localStorage.setItem('isNotifications', this.checked)" ${appState.isNotifications ? 'checked' : ''}> Thread Reply Notifications 🔔
+                        </label>
+                        <label class="flex items-center text-gray-900 dark:text-gray-200 font-medium cursor-pointer">
+                            <input type="checkbox" class="mr-2 h-5 w-5 text-green-600 rounded focus:ring-green-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700" id="dark-mode-toggle" onchange="toggleDarkMode()" ${appState.isDarkMode ? 'checked' : ''}> Dark Mode 🌙
+                        </label>
+                    </div>
+                    
+                    <button class="w-full bg-red-500 text-white py-2 rounded-xl hover:bg-red-600 transition-colors font-bold shadow-md mt-6" onclick="logOut()">Log Out Securely 🚪</button>
+                </div>
+            `;
+            appContent.innerHTML = html;
+        }
+
+        function updateProfilePic(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    appState.user.profilePic = e.target.result;
+                    renderProfilePage();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveProfile() {
+            appState.user.name = document.getElementById('edit-name').value;
+            appState.user.email = document.getElementById('edit-email').value;
+            appState.user.program = document.getElementById('edit-program').value;
+            localStorage.setItem('user', JSON.stringify(appState.user));
+            alert('Profile updated successfully!');
+            navigate('home', document.querySelector('.bottom-nav button[data-page="home"]'));
+        }
+
+        function postNewThread(courseKey) {
+            const input = document.getElementById('new-thread-input');
+            const isAnonCheckbox = document.getElementById('post-anon');
+            const title = input.value.trim();
+            if (!title) {
+                alert('Thread title cannot be empty.');
+                return;
+            }
+
+            const isAnon = isAnonCheckbox.checked || appState.isAnonDefault;
+
+            const newThreadId = Math.max(...Object.keys(mockData.threads).map(Number), 0) + 1;
+            mockData.threads[newThreadId] = {
+                title: title,
+                replies: 0,
+                id: newThreadId,
+                course: courseKey,
+                user: isAnon ? 'Anonymous' : defaultUser,
+                time: 'just now'
+            };
+            mockData.courses[courseKey].threads.unshift(newThreadId);
+
+            input.value = '';
+            isAnonCheckbox.checked = appState.isAnonDefault;
+            renderCourseDetailsPage(courseKey);
+        }
+
+        function postReply(threadId) {
+            const input = document.getElementById('new-reply-input');
+            const isAnonCheckbox = document.getElementById('reply-anon');
+            const text = input.value.trim();
+            if (!text) {
+                alert('Reply cannot be empty.');
+                return;
+            }
+            
+            const isAnon = isAnonCheckbox.checked || appState.isAnonDefault;
+            const replyUser = isAnon ? 'Anonymous' : defaultUser;
+            const newReply = { user: replyUser, text: text, time: '1 min ago' };
+
+            if (!mockData.replies[threadId]) {
+                mockData.replies[threadId] = [];
+            }
+            mockData.replies[threadId].push(newReply);
+            mockData.threads[threadId].replies += 1;
+
+            input.value = '';
+            isAnonCheckbox.checked = appState.isAnonDefault;
+            renderThreadDetailsPage(threadId);
+        }
+
+        function sendToAIBuddy(preQuery = null) {
+            const input = document.getElementById('ai-input');
+            const query = preQuery || input.value.trim();
+            if (!query) return;
+
+            mockData.chatHistory.push({ user: 'You', text: query });
+            if (!preQuery) input.value = '';
+            renderAIBuddyPage();
+            
+            const messagesContainer = document.getElementById('chat-messages');
+            if (messagesContainer) messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            const aiResponse = getAIResponse(query);
+
+            setTimeout(() => {
+                mockData.chatHistory.push({ user: 'Grok AI Buddy', text: aiResponse });
+                renderAIBuddyPage();
+            }, 1000);
+        }
+
+        function getAIResponse(query) {
+            const lowerQuery = query.toLowerCase();
+            // More varied responses with xAI integration feel
+            if (lowerQuery.includes('summarize')) {
+                return `As Grok from xAI, here's a summary: Key strategies include active recall with Anki, solving PYQs, and group studies. Focus on high-weight topics for efficiency. Need more details?`;
+            } else if (lowerQuery.includes('stress') || lowerQuery.includes('wellness')) {
+                return `Grok here! For stress, try Pomodoro technique: 25 mins study, 5 mins break. Also, mindfulness exercises. xAI tip: Curiosity reduces anxiety—ask me anything!`;
+            } else if (lowerQuery.includes('ma105')) {
+                return `Tough course? With guidance, you'll pass MA105. Review basics, practice daily. xAI insight: Break problems into smaller parts for better understanding.`;
+            } else if (lowerQuery.includes('course') || lowerQuery.includes('tips')) {
+                return `Study tip from xAI: Use spaced repetition for retention. For courses, prioritize concepts over rote learning. What specific course?`;
+            } else {
+                return `I'm Grok, built by xAI to maximize truth and curiosity. Ask about courses, wellness, or anything—I specialize in helpful, witty responses!`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
